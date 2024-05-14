@@ -100,6 +100,9 @@ public class Client extends UnicastRemoteObject implements IClient {
                     } catch (RemoteException e) {
                         System.out.println("Error deleting client: " + e);
                         System.exit(0);
+                    } catch (Exception e) {
+                        System.out.println("Error deleting client... :" + e);
+                        System.exit(0);
                     }
                 }));
                 Client c = new Client();
@@ -250,6 +253,8 @@ public class Client extends UnicastRemoteObject implements IClient {
                                                 }
                                             } catch (NumberFormatException e) {
                                                 System.out.println("Invalid number. Try again!");
+                                            } catch (Exception e) {
+                                                System.out.println("Error: " + e);
                                             }
                                         }
                                     }

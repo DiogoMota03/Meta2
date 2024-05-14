@@ -206,6 +206,8 @@ public class ISBs extends UnicastRemoteObject implements IISBs {
             System.err.println("Error creating file: " + ex.getMessage());
         } catch (IOException ex) {
             System.err.println("Error writing to the file: " + ex.getMessage());
+        } catch (Exception ex) {
+            System.err.println("Error: " + ex.getMessage());
         }
     }
 

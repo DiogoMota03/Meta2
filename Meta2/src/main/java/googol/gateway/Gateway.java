@@ -158,8 +158,10 @@ public class Gateway extends UnicastRemoteObject implements IGateway {
 
                 try {
                     return barrel.getTop10();
-                } catch (RemoteException e) {
+                } catch (RemoteException | NullPointerException e) {
                     System.out.println("Error while getting TOP10 searches");
+                } catch (Exception e) {
+                    System.out.println("Error in getTop10Searches()...");
                 }
             }
         }
@@ -220,6 +222,8 @@ public class Gateway extends UnicastRemoteObject implements IGateway {
             System.out.println("Invalid URL was presented!");
         } catch (RemoteException e) {
             System.out.println("Error while adding URL to the queue");
+        } catch (Exception e) {
+            System.out.println("Error in insertURL()...");
         }
 
         //queue.addURL(s);
@@ -238,13 +242,13 @@ public class Gateway extends UnicastRemoteObject implements IGateway {
             notPrinted = 1;
             return q.requestNextURL();
 
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
-        } catch (NotBoundException e) {
+        } catch (MalformedURLException | NotBoundException e) {
             if (notPrinted == 1) {
                 System.out.println("URL_Queue not reachable...");
                 notPrinted = 0;
             }
+            throw new RuntimeException(e);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
@@ -264,6 +268,8 @@ public class Gateway extends UnicastRemoteObject implements IGateway {
             System.out.println("URL_Queue not reachable...");
         } catch (RemoteException e) {
             System.out.println("Error while showing URLs");
+        } catch (Exception e) {
+            System.out.println("Error in showURLs()...");
         }
     }
 
@@ -283,6 +289,8 @@ public class Gateway extends UnicastRemoteObject implements IGateway {
             System.out.println("URL_Queue not reachable...");
         } catch (RemoteException e) {
             System.out.println("Error while adding URLs to the queue");
+        } catch (Exception e) {
+            System.out.println("Error in addURLs()...");
         }
     }
 
@@ -302,6 +310,8 @@ public class Gateway extends UnicastRemoteObject implements IGateway {
             System.out.println("URL_Queue not reachable...");
         } catch (RemoteException e) {
             System.out.println("Error while finishing URL processing");
+        } catch (Exception e) {
+            System.out.println("Error in finishProcess()...");
         }
     }
 
@@ -596,6 +606,8 @@ public class Gateway extends UnicastRemoteObject implements IGateway {
                     return barrel.getSavedURLs();
                 } catch (RemoteException e) {
                     System.out.println("Error while getting saved URLs");
+                } catch (Exception e) {
+                    System.out.println("Error in requestSavedURLs()...");
                 }
             }
         }

@@ -232,12 +232,15 @@ public class Downloader implements IDownloader {
                             } catch (ConcurrentModificationException e) {
                                 //System.out.println(ANSI_YELLOW + "Retrying..." + ANSI_RESET);
                                 //Thread.sleep(500);
-                            } catch (ConnectException e) {
+                            } catch (RemoteException e) {
                                 if(printed == 0)
                                     System.out.println(ANSI_RED + "Gateway not reachable..." + ANSI_RESET);
                                 printed = 1;
                                 Thread.sleep(3000);
                                 g = (IGateway) Naming.lookup("rmi://" + Gateway.GATEWAY_IP + ":1099/XPTO");
+                            } catch (Exception e) {
+                                System.out.println(ANSI_RED + "Exception occurred..." + ANSI_RESET);
+                                Thread.sleep(1000);
                             }
                         }
                         downloader.isFree = true;
@@ -258,6 +261,9 @@ public class Downloader implements IDownloader {
                 //throw new RuntimeException(e);
             } catch (InterruptedException e) {
                 System.out.println("Sleep failed...");
+                //throw new RuntimeException(e);
+            } catch (Exception e) {
+                System.out.println("Error: " + e);
                 //throw new RuntimeException(e);
             }
         }
