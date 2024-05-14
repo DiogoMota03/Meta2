@@ -50,16 +50,11 @@ function showMessage(message) {
     document.getElementById("messages").append(message);
 }
 
-function search() {
-    var text = document.getElementById("username").value;
-    stompClient.send("/app/message", {}, JSON.stringify({'text': text}));
-}
-
 window.addEventListener('load',
     function () {
-        document.getElementById("search-button").addEventListener('click', (e) => {
+        document.getElementById("connect").addEventListener('click', (e) => {
             e.preventDefault();
-            search();
+            connect();
         });
         document.getElementById("disconnect").addEventListener('click', (e) => {
             e.preventDefault();
