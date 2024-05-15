@@ -4,6 +4,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.util.HtmlUtils;
 
 @Controller
@@ -20,14 +21,16 @@ public class MessagingController {
         return new Message(HtmlUtils.htmlEscape(message.content().toUpperCase()));
     }
 
-    @MessageMapping("/search")
-    public void search(@Payload String message) {
+    @GetMapping("/search")
+    public String search(@Payload String message) {
         System.out.println("Search text: " + message);
+        return "search.html";
     }
 
-    @MessageMapping("/lucky")
-    public void luckySearch(@Payload String message) {
+    @GetMapping("/lucky")
+    public String luckySearch() {
         System.out.println("Lucky Search Requested");
+        return "lucky.html";
     }
 }
 

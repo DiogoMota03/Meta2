@@ -8,6 +8,7 @@ function connect() {
         console.log('Connected: ' + frame);
     });
 }
+
 connect();
 
 
@@ -31,12 +32,12 @@ function subscribe() {
     var socket = new SockJS('/my-websocket');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
-        setConnected(true);
-        console.log('Connected: ' + frame);
+        setConnected(true); // TODO
+        console.log('Subscribed: ' + frame);
 
         // Subscribe to the topic
         // The server will send messages to this topic
-        stompClient.subscribe('/topic/messages', function (message) {
+        stompClient.subscribe('/topic/status', function (message) {
             showMessage(JSON.parse(message.body).content);
         });
     });
@@ -47,14 +48,15 @@ function searchRequest() {
     var searchText = document.getElementById("searchText").value;
     stompClient.send("/app/search", {}, JSON.stringify({'content': searchText}));
 
+    window.location.href = "http://localhost:8080/search?s=" + searchText;
 }
 
 function feelingLuckyRequest() {
     //var searchText = document.getElementById("searchText").value;
-    stompClient.send("/app/lucky", {}, JSON.stringify({'content': searchText}));
+    //stompClient.send("/app/lucky", {}, ""));
+
+    window.location.href = "http://localhost:8080/lucky";
 }
-
-
 
 function disconnect() {
     if (stompClient !== null) {
@@ -78,20 +80,23 @@ function showMessage(message) {
 
 window.addEventListener('load',
     function () {
-        document.getElementById("search").addEventListener('click', (e) => {
-            e.preventDefault();
-            searchRequest();
-        });
-        document.getElementById("feelingLucky").addEventListener('click', (e) => {
-            e.preventDefault();
-            feelingLuckyRequest();
-        });
         var searchBar = document.getElementById("searchText");
 
         searchBar.addEventListener('keydown', function (e) {
-            if (e.key === 'Enter') {
+            if (e.key === 'Enter' && searchBar.value !== "") {
                 e.preventDefault(); // Prevent form submission
                 searchRequest();
             }
+        });
+
+        document.getElementById("search").addEventListener('click', (e) => {
+            e.preventDefault();
+            if (searchBar.value !== "")
+                searchRequest();
+        });
+
+        document.getElementById("feelingLucky").addEventListener('click', (e) => {
+            e.preventDefault();
+            feelingLuckyRequest();
         });
     }, false);
