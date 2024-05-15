@@ -8,6 +8,7 @@ function connect() {
         console.log('Connected: ' + frame);
     });
 }
+
 connect();
 
 
@@ -31,12 +32,12 @@ function subscribe() {
     var socket = new SockJS('/my-websocket');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
-        setConnected(true);
-        console.log('Connected: ' + frame);
+        setConnected(true); // TODO
+        console.log('Subscribed: ' + frame);
 
         // Subscribe to the topic
         // The server will send messages to this topic
-        stompClient.subscribe('/topic/messages', function (message) {
+        stompClient.subscribe('/topic/status', function (message) {
             showMessage(JSON.parse(message.body).content);
         });
     });
