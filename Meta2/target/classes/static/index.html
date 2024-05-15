@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title>Chat Application</title>
     <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -14,24 +14,29 @@
             height: 70%;
         }
     </style>
+    <style>
+        .search-input {
+            width: 70%;
+        }
+    </style>
 </head>
 <body>
 <noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! This application relies on Javascript being
     enabled. Please enable Javascript and reload this page!</h2></noscript>
-<div class="googol-container">
-    <div class="form-group">
-        <div class="logo">
-            <img src="logoGoogol.png" alt="Googol Logo">
-        </div>
-        <div class="search-bar">
-            <input type="text" class="search-input" placeholder="Search Googol or type a URL">
-        </div>
-        <div class="buttons">
-            <form class="form-inline">
-                <button class="search-button">Googol Search</button>
-                <button class="search-button">I'm Feeling Lucky</button>
-            </form>
-        </div>
+<div id="googol-container" class="googol-container">
+    <div class="logo">
+        <img src="logoGoogol.png" alt="Googol Logo">
+    </div>
+    <div id="search-bar" class="search-bar">
+        <label class="block-label">
+            <input id="searchText" type="text" class="search-input" placeholder="Search Googol or type a URL">
+        </label>
+    </div>
+    <div class="buttons">
+        <form class="form-inline">
+            <button id="search" class="search-button">Googol Search</button>
+            <button id="feelingLucky" class="search-button">I'm Feeling Lucky</button>
+        </form>
     </div>
 </div>
 </body>

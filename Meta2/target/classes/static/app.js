@@ -1,7 +1,18 @@
 var stompClient = null;
 
+
+function connect() {
+    var socket = new SockJS('/ws');
+    stompClient = Stomp.over(socket);
+    stompClient.connect({}, function (frame) {
+        console.log('Connected: ' + frame);
+    });
+}
+connect();
+
+
 // Conjunto de instruções que vai mexer com frontend (acho eu)
-function setConnected(connected) {
+/*function setConnected(connected) {
     if (connected) {
         document.getElementById("connect").setAttribute("disabled", '');
         document.getElementById("disconnect").removeAttribute("disabled");
@@ -13,9 +24,10 @@ function setConnected(connected) {
         document.getElementById("disconnect").setAttribute("disabled", '');
     }
     document.getElementById("messages").innerHTML = "";
-}
+}*/
 
-function connect() {
+// TODO use for status
+function subscribe() {
     var socket = new SockJS('/my-websocket');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
@@ -29,6 +41,20 @@ function connect() {
         });
     });
 }
+
+
+function searchRequest() {
+    var searchText = document.getElementById("searchText").value;
+    stompClient.send("/app/search", {}, JSON.stringify({'content': searchText}));
+
+}
+
+function feelingLuckyRequest() {
+    //var searchText = document.getElementById("searchText").value;
+    stompClient.send("/app/lucky", {}, JSON.stringify({'content': searchText}));
+}
+
+
 
 function disconnect() {
     if (stompClient !== null) {
@@ -52,17 +78,20 @@ function showMessage(message) {
 
 window.addEventListener('load',
     function () {
-        document.getElementById("connect").addEventListener('click', (e) => {
+        document.getElementById("search").addEventListener('click', (e) => {
             e.preventDefault();
-            connect();
+            searchRequest();
         });
-        document.getElementById("disconnect").addEventListener('click', (e) => {
+        document.getElementById("feelingLucky").addEventListener('click', (e) => {
             e.preventDefault();
-            disconnect();
+            feelingLuckyRequest();
         });
-        document.getElementById("send").addEventListener('click', (e) => {
-            e.preventDefault();
-            sendMessage();
-        });
+        var searchBar = document.getElementById("searchText");
 
+        searchBar.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') {
+                e.preventDefault(); // Prevent form submission
+                searchRequest();
+            }
+        });
     }, false);
