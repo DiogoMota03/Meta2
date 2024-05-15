@@ -17,9 +17,13 @@
         <img src="logoGoogol.png" alt="Googol Logo">
     </div>
     <div id="search-bar" class="search-bar">
-        <label class="block-label">
-            <input id="searchText" type="text" class="search-input" placeholder="Search Googol or type a URL">
-        </label>
+        <div class="search-and-switch">
+            <label class="switch block-label">
+                <input type="checkbox">
+                <span class="slider"></span>
+            </label>
+            <input type="text" class="search-input" placeholder="Search...">
+        </div>
     </div>
     <div class="buttons">
         <form class="form-inline">
@@ -27,6 +31,8 @@
             <button id="feelingLucky" class="search-button">I'm Feeling Lucky</button>
         </form>
     </div>
+
+
 </div>
 </body>
 </html>
