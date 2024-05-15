@@ -10,7 +10,6 @@ body {
 
 .googol-container {
     max-width: 940px;
-    padding: 2em 3em;
     margin: 0 auto 20px;
     background-color: #000000;
     border: 1px solid #000000;
@@ -137,4 +136,22 @@ button:hover {
 
 .switch {
     flex-shrink: 0;
+}
+
+.cat {
+    position: absolute;
+    z-index: -1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-85%);
+}
+
+@keyframes slide-up {
+    from { top: 50%; }
+    to { top: 25%; }
+}
+
+@keyframes slide-down {
+    from { top: 25%; }
+    to { top: 29%; }
 }
