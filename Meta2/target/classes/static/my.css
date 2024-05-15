@@ -143,16 +143,18 @@ button:hover {
     z-index: -1;
     top: 50%;
     left: 50%;
-    transform: translate(-85%);
-}
-
-@keyframes slide-down {
-    from { top: 25%; }
-    to { top: 29%; }
+    transform: translate(-80%);
 }
 
 @keyframes slide-up {
     from { top: 50%; }
-    to { top: 25%; }
+    to { top: 15%; }
 }
+
+
+@keyframes slide-down {
+    from { top: 15%; }
+    to { top: 23%; }
+}
+
 

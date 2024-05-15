@@ -126,10 +126,13 @@ window.addEventListener('load',
         var searchToggle = document.getElementById("searchToggle");
         searchToggle.addEventListener('change', function () {
             var searchText = document.getElementById("searchText");
+            var catImage = document.querySelector('.cat img');
             if (searchToggle.checked) {
                 searchText.placeholder = 'Search...';
+                catImage.src = 'cat_searching.png';
             } else {
                 searchText.placeholder = 'Insert...';
+                catImage.src = 'car_inserting.png';
             }
         });
 
