@@ -104,17 +104,13 @@ window.addEventListener('load',
 
         // Define the event listener function
         var animationEndHandler = function() {
-            // Change the z-index of the .cat element
             cat.style.zIndex = '1';
 
-            // Start the slide-down animation
             cat.style.animation = 'slide-down 2s forwards';
         };
 
-        // Add the event listener for the animationend event
         cat.addEventListener('animationend', animationEndHandler);
 
-        // Define the click event handler function
         var logoClickHandler = function(e) {
             e.preventDefault();
             // cat animation

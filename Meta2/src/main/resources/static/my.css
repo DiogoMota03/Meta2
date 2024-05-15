@@ -146,12 +146,13 @@ button:hover {
     transform: translate(-85%);
 }
 
+@keyframes slide-down {
+    from { top: 25%; }
+    to { top: 29%; }
+}
+
 @keyframes slide-up {
     from { top: 50%; }
     to { top: 25%; }
 }
 
-@keyframes slide-down {
-    from { top: 25%; }
-    to { top: 29%; }
-}
