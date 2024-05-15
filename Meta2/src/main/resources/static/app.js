@@ -122,4 +122,15 @@ window.addEventListener('load',
 
         // Add the click event listener to the logo
         document.getElementById("logo").addEventListener('click', logoClickHandler);
+
+        var searchToggle = document.getElementById("searchToggle");
+        searchToggle.addEventListener('change', function () {
+            var searchText = document.getElementById("searchText");
+            if (searchToggle.checked) {
+                searchText.placeholder = 'Search...';
+            } else {
+                searchText.placeholder = 'Insert...';
+            }
+        });
+
     }, false);
