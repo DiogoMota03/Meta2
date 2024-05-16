@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.HtmlUtils;
 
+import javax.swing.*;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 
@@ -19,13 +20,16 @@ import java.rmi.RemoteException;
 public class MessagingController {
     private IGateway h;
     private Client c;
+    private String name;
 
     @GetMapping("/")
     public String redirect() {
         try {
             h = (IGateway) Naming.lookup("XPTO");
             c = new Client();
-            h.subscribe("jonas", (IClient) c);
+            if(name == null)
+                name = h.requestId();
+            h.subscribe(name, (IClient) c);
 
         }catch (Exception ex){
             System.out.println("Error: " + ex.getMessage());
@@ -50,7 +54,12 @@ public class MessagingController {
     public String search(@RequestParam("s") String message) {
         System.out.println("Search text: " + message);
         try {
-            h.searchWords("jonas", message, 0, true);
+            int r = h.searchWords(name, message, 0, true);
+            if (r == -1) {
+                //TODO: decidir como fazer quando não encontrar nada
+            } else{
+                //TODO: imprimir resultados na página
+            }
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }

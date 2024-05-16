@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface IGateway extends Remote {
+    String requestId() throws RemoteException;
+
     int subscribe(String name, IClient client) throws RemoteException;
 
     int getMaxIndex(int size) throws RemoteException;

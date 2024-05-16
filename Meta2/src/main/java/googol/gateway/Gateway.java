@@ -20,6 +20,7 @@ import java.time.Duration;
 import java.util.*;
 import java.util.HashMap;
 import java.time.Instant;
+import java.util.UUID;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -73,6 +74,10 @@ public class Gateway extends UnicastRemoteObject implements IGateway {
      */
     public Gateway() throws RemoteException {
         super();
+    }
+
+    public String requestId() throws RemoteException {
+        return UUID.randomUUID().toString();
     }
 
     /**
