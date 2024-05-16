@@ -56,6 +56,9 @@ function subscribe() {
 function changeFormAction() {
     var form = document.getElementById('myForm');
     var switchToggle = document.getElementById('searchToggle');
+    var searchBar = document.getElementById("searchText");
+    localStorage.setItem('searchText', searchBar.value);
+
     if (switchToggle.checked) {
         form.action = "/search";
     } else {
@@ -75,6 +78,7 @@ function changeFormAction() {
             .then(text => {
                 // Show a pop-up with the response text
                 alert("Inserting URL <" + text + "> to the queue.");
+                searchBar.value = '';
             })
             .catch(error => console.error('Error:', error));
     }
@@ -126,6 +130,9 @@ function showMessage(message) {
 window.addEventListener('load',
     function () {
         var searchBar = document.getElementById("searchText");
+        if (searchBar && localStorage.getItem('searchText')) {
+                searchBar.value = localStorage.getItem('searchText');
+            }
         var searchToggle = document.getElementById("searchToggle");
 
         searchBar.addEventListener('keydown', function (e) {
