@@ -12,15 +12,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.HtmlUtils;
 
 import java.rmi.Naming;
+import java.rmi.RemoteException;
 
 
 @Controller
 public class MessagingController {
+    private IGateway h;
+    private Client c;
+
     @GetMapping("/")
     public String redirect() {
         try {
-            IGateway h = (IGateway) Naming.lookup("XPTO");
-            Client c = new Client();
+            h = (IGateway) Naming.lookup("XPTO");
+            c = new Client();
             h.subscribe("jonas", (IClient) c);
         }catch (Exception ex){
             System.out.println("Error: " + ex.getMessage());
@@ -44,6 +48,11 @@ public class MessagingController {
     @GetMapping("/search")
     public String search(@RequestParam("s") String message) {
         System.out.println("Search text: " + message);
+        try {
+            h.searchWords("jonas", message, 0, true);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
         return "search";
     }
 
