@@ -186,7 +186,6 @@ public class Client extends UnicastRemoteObject implements IClient {
                             int index = 0;
 
                             String search = a;
-
                             //search for the word(s) in the URL, returns -1 if the word(s) is not found, otherwise returns the max index
                             int maxIndex = g.searchWords(name, search, index, true);
 
