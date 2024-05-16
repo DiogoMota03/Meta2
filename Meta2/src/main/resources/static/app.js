@@ -43,7 +43,7 @@ function subscribe() {
     });
 }
 
-
+/*
 function searchRequest() {
     var searchText = document.getElementById("searchText").value;
     stompClient.send("/app/search", {}, JSON.stringify({'content': searchText}));
@@ -62,6 +62,7 @@ function feelingLuckyRequest() {
 
     window.location.href = "http://localhost:8080/lucky";
 }
+*/
 
 function disconnect() {
     if (stompClient !== null) {
