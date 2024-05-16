@@ -282,8 +282,8 @@ public class Client extends UnicastRemoteObject implements IClient {
                 } catch (InterruptedException ex) {
                     throw new RuntimeException(ex);
                 }
-            } catch (Exception e) {
-                System.out.println(ANSI_RED + "Exception in main: " + e + ANSI_RESET);
+            } catch (Exception e) { // TODO-> triggers a null pointer exception if 0 results are returned in search
+                System.out.println(ANSI_RED + "Exception in client main: " + e + ANSI_RESET);
             }
         }
     }

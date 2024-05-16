@@ -6,6 +6,8 @@ import googol.client.IClient;
 import googol.queue.IURL_Queue;
 import googol.queue.URLData;
 import googol.queue.URL_Queue;
+import org.example.meta2.HackerNewsController;
+import org.example.meta2.HackerNewsItemRecord;
 
 import java.net.*;
 import java.net.UnknownHostException;
@@ -17,6 +19,11 @@ import java.time.Duration;
 import java.util.*;
 import java.util.HashMap;
 import java.time.Instant;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 /**
  * Represents the main server component implementing the {@link IGateway} interface.
@@ -368,6 +375,8 @@ public class Gateway extends UnicastRemoteObject implements IGateway {
     public int searchWords(String name, String s, int index, boolean flag) throws RemoteException {
         System.out.println("Searching for: " + s);
 
+        // TODO Move hacker news search here os somewhere close
+
         //System.out.println("index: " + index);
 
         if (flag) {
@@ -486,7 +495,7 @@ public class Gateway extends UnicastRemoteObject implements IGateway {
             return -1;
         }
 
-        if (resultEven == null || resultOdd == null) {
+        if ((resultEven == null || resultOdd == null)) { // TODO add && if hacker news has no results too
             clients.get(name).print_on_client("No results found!");
             return -1;
         }
@@ -517,6 +526,64 @@ public class Gateway extends UnicastRemoteObject implements IGateway {
             clients.get(name).print_on_client("No results found");
             return -1;
         }
+
+        // call heackernews search
+        HackerNewsController hackerNewsController = new HackerNewsController();
+        List<HackerNewsItemRecord> hackerNewsResults = hackerNewsController.hackerNewsTopStories(s);
+
+
+/* Appearance: TODO formatar, realizar esta pesquisa sem urls nos barrels ou sem resultados oara a pesquisa nos barrels
+
+    > https://github.com/quarylabs/quary
+    > Show HN: Open-source BI and analytics for engineers
+    > We are building Quary (), an engineer-first BI/analytics product. You can fi-
+    nd our repo at and our website at . There’s a demo video here: As engineers
+     who have worked on data at startups and Amazon, we were frustrated by sel...
+ */
+        clients.get(name).print_on_client("\n########### Hacker news results #########\n");
+
+        ArrayList<String> hackerNewsUrls = new ArrayList<>();
+
+        System.out.println("HackerNews Results: " + hackerNewsResults.size());
+        for (HackerNewsItemRecord hackerNewsResult : hackerNewsResults) {
+            clients.get(name).print_on_client(hackerNewsResult.url());
+            hackerNewsUrls.add(hackerNewsResult.url());
+            clients.get(name).print_on_client(hackerNewsResult.title());
+
+            // Remove all links from the text (looked bad)
+            String text = hackerNewsResult.text();
+            Document doc = Jsoup.parse(text);
+            Elements links = doc.select("a");
+
+            for (Element link : links) {
+                link.remove();
+            }
+
+            StringBuilder b = new StringBuilder();
+
+            for (int i = 0; i < Math.min(225, doc.text().length()); i++) {
+                b.append(doc.text().charAt(i));
+
+                if (i % 75 == 0 && i != 0) {
+                    if (doc.text().charAt(i+1) != ' ') {
+                        b.append("-");
+                    }
+                    b.append("\n");
+                }
+            }
+            clients.get(name).print_on_client(b + "...\n");
+
+        }
+
+        clients.get(name).print_on_client("#######################################");
+
+        hackerNewsUrls.forEach(url -> { // TODO copilot -> didnt check
+            try {
+                addURLs(hackerNewsUrls);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
 
         //Print the result on the client
         showPage(name, index, result);
