@@ -34,7 +34,7 @@ public class Client extends UnicastRemoteObject implements IClient {
     /**
      * Primary constructor for this class
      */
-    Client() throws RemoteException {
+    public Client() throws RemoteException {
         super();
     }
 

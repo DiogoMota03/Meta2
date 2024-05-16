@@ -4,11 +4,14 @@ import googol.barrel.IISBs;
 import googol.client.IClient;
 
 import java.rmi.*;
+import java.rmi.Remote;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
 public interface IGateway extends Remote {
     int subscribe(String name, IClient client) throws RemoteException;
+
     int getMaxIndex(int size) throws RemoteException;
 
     void getStatus(String name) throws RemoteException;
@@ -33,7 +36,7 @@ public interface IGateway extends Remote {
 
     ArrayList<String> requestSavedURLs() throws RemoteException;
 
-
-
     void barrelRegistration(IISBs barrel) throws RemoteException;
+
+    void printOnServer(String s) throws RemoteException;
 }

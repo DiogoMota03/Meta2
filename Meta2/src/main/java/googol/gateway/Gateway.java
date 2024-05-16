@@ -8,6 +8,7 @@ import googol.queue.URLData;
 import googol.queue.URL_Queue;
 import org.example.meta2.HackerNewsController;
 import org.example.meta2.HackerNewsItemRecord;
+import org.springframework.stereotype.Service;
 
 import java.net.*;
 import java.net.UnknownHostException;
@@ -754,6 +755,12 @@ public class Gateway extends UnicastRemoteObject implements IGateway {
 
         updateBarrels(barrel.getType(), barrel.getId());
     }
+
+    public void printOnServer(String s) throws RemoteException {
+        System.out.println(s);
+    }
+
+
 
     /**
      * Main method the program server, finds the current IP of the machine, creates a new server object and binds it to the RMI registry while
