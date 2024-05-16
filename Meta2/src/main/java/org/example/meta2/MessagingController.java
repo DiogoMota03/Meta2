@@ -8,6 +8,7 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.HtmlUtils;
 
 import java.rmi.Naming;
@@ -41,15 +42,15 @@ public class MessagingController {
     }
 
     @GetMapping("/search")
-    public String search(@Payload String message) {
+    public String search(@RequestParam("s") String message) {
         System.out.println("Search text: " + message);
-        return "search.html";
+        return "search";
     }
 
     @GetMapping("/lucky")
     public String luckySearch() {
         System.out.println("Lucky Search Requested");
-        return "lucky.html";
+        return "lucky";
     }
 }
 
