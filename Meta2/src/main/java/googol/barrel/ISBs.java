@@ -312,6 +312,15 @@ public class ISBs extends UnicastRemoteObject implements IISBs {
 
                 String[] data = message.split("\\|");
 
+                if(data.length < 3) {
+                    String successMes = "SUCCESS: Barrel received URL";
+                    byte[] successbuf = successMes.getBytes();
+                    DatagramPacket successPack = new DatagramPacket(successbuf, successbuf.length, packet.getAddress(), packet.getPort());
+                    socket.send(successPack);
+                    continue;
+                }
+
+
                 String[] content = data[2].split(" ");
 
                 URLData urlData = new URLData(data[0], data[1], content);
@@ -320,13 +329,14 @@ public class ISBs extends UnicastRemoteObject implements IISBs {
                 if (data.length > 3 && !data[3].isEmpty()) {
                     urls = data[3].split(" ");
                 }
-                /* else {
+                /*
+                else {
                     System.out.println("SIZE MENOR QUE 3");
                     for (String s : data) {
                         System.out.println(s);
                     }
-                }*/
-
+                }
+*/
                 if (urls != null) {
                     for (String url : urls) {
                         if (!associatedURLs.containsKey(url)) {
@@ -462,6 +472,7 @@ public class ISBs extends UnicastRemoteObject implements IISBs {
 
                 isbs = new ISBs();
                 success = 1;
+                printed = 0;
                 printed = 0;
 
                 g.barrelRegistration(isbs);

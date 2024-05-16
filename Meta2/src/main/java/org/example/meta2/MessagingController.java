@@ -136,4 +136,3 @@ public class MessagingController {
         return "status";
     }
 }
-
