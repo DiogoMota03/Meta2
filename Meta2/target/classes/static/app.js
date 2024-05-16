@@ -98,6 +98,7 @@ window.addEventListener('load',
             }
         });
 
+/*
         document.getElementById("search").addEventListener('click', (e) => {
             e.preventDefault();
             if (searchBar.value !== "")
@@ -111,6 +112,7 @@ window.addEventListener('load',
             e.preventDefault();
             feelingLuckyRequest();
         });
+        */
         // Select the .cat element
         var cat = document.querySelector('.cat');
 
@@ -143,7 +145,7 @@ window.addEventListener('load',
                 catImage.src = 'cat_searching.png';
             } else {
                 searchText.placeholder = 'Insert...';
-                catImage.src = 'car_inserting.png';
+                catImage.src = 'cat_inserting.png';
             }
         });
 

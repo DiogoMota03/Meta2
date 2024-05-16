@@ -60,10 +60,11 @@ input[type="text"]:focus {
     color: #3c4043;
     font-size: 14px;
     padding: 10px 20px;
-    border-radius: 4px;
+    border-radius: 15px;
     cursor: pointer;
     transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     margin: 5px;
+    width: 100px;
 }
 
 button:hover {
@@ -126,16 +127,17 @@ button:hover {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .search-input {
     flex: 1; /* This makes the search input take up remaining space */
-    margin-left: 10px; /* Added margin for spacing between search bar and switch */
 }
 
 .switch {
     flex-shrink: 0;
+    margin-right: 10px;
 }
 
 .cat {

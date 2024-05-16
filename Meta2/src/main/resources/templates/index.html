@@ -1,5 +1,6 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Chat Application</title>
     <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -15,12 +16,12 @@
 <div id="googol-container" class="googol-container">
 
     <div class="cat">
-        <img src="car_inserting.png" alt="Googol Logo">
+        <img src="cat_inserting.png" alt="cat :)">
     </div>
     <div id="logo" class="logo">
         <img src="logoGoogol.png" alt="Googol Logo">
     </div>
-    <div id="search-bar" class="search-bar">
+    <!--div id="search-bar" class="search-bar">
         <div class="search-and-switch">
             <label class="switch block-label">
                 <input id="searchToggle" type="checkbox">
@@ -28,12 +29,31 @@
             </label>
             <input id="searchText" type="text" class="search-input" placeholder="Insert...">
         </div>
-    </div>
+    </div-->
     <div class="buttons">
-        <form class="form-inline">
+        <form action="/process" method="post">
+            <div id="search-bar" class="search-bar">
+                <div class="search-and-switch">
+                    <label class="switch block-label">
+                        <input id="searchToggle" type="checkbox">
+                        <span class="slider"></span>
+                    </label>
+                    <label for="searchText"></label>
+
+                    <input type="text" id="searchText" placeholder="Insert..." name="text">
+
+                    <!--input id="searchText" type="text" class="search-input" placeholder="Insert..."-->
+                </div>
+            </div>
+
+            <input type="submit" formaction="/search" value="Submit" class="search-button">
+            <input type="submit" formaction="/status" value="Status" class="search-button">
+        </form>
+
+        <!--form class="form-inline">
             <button id="search" class="search-button">Googol Search</button>
             <button id="feelingLucky" class="search-button">I'm Feeling Lucky</button>
-        </form>
+        </form-->
     </div>
 </div>
 </body>

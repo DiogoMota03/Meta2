@@ -8,6 +8,7 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.util.HtmlUtils;
 
@@ -50,6 +51,7 @@ public class MessagingController {
         return new Message(HtmlUtils.htmlEscape(message.content().toUpperCase()));
     }
 
+/*
     @GetMapping("/search")
     public String search(@RequestParam("s") String message) {
         System.out.println("Search text: " + message);
@@ -76,13 +78,32 @@ public class MessagingController {
             throw new RuntimeException(e);
         }
 
-        return "lucky";
+        return "status";
     }
 
-    @GetMapping("/lucky")
+    @GetMapping("/status")
     public String luckySearch() {
         System.out.println("Lucky Search Requested");
-        return "lucky";
+        return "status";
+    }*/
+
+
+    @PostMapping("/process")
+    public String processText(@RequestParam String text) {
+        System.out.println("Received text: " + text);
+        return "index"; // Redirect back to index page after processing
+    }
+
+    @PostMapping("/search")
+    public String greenPage(@RequestParam String text) {
+        System.out.println("Received text: " + text);
+        return "search";
+    }
+
+    @PostMapping("/status")
+    public String redPage(@RequestParam String text) {
+        System.out.println("Received text: " + text);
+        return "status";
     }
 }
 
