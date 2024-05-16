@@ -48,7 +48,7 @@ function searchRequest() {
     var searchText = document.getElementById("searchText").value;
     stompClient.send("/app/search", {}, JSON.stringify({'content': searchText}));
 
-    window.location.href = "http://localhost:8080/search?se=" + searchText;
+    window.location.href = "http://localhost:8080/search?s=" + searchText;
 }
 
 function feelingLuckyRequest() {
