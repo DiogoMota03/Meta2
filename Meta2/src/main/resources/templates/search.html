@@ -3,19 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link href="/my.css" rel="stylesheet">
+    <link href="/searching.css" rel="stylesheet">
     <script src="/webjars/jquery/jquery.min.js"></script>
     <script src="/webjars/sockjs-client/sockjs.min.js"></script>
     <script src="/webjars/stomp-websocket/stomp.min.js"></script>
     <script src="/app.js"></script>
-    <style>
-        body {
-            background-color: green;
-        }
-    </style>
 </head>
 <body>
-<h1>Searching</h1>
-<!-- Add more content here as needed -->
+<div id="googol-search" class="googol-search">
+    <form class="form-inline">
+        <div id="logo" class="logo">
+            <img src="logoGoogol.png" alt="Googol Logo">
+        </div>
+        <div id="search-bar" class="search-bar">
+            <div class="search">
+                <input id="searchText" type="text" class="search-input" placeholder="Search words...">
+            </div>
+        </div>
+    </form>
+</div>
+<div class="buttons">
+    <form class="form-inline">
+        <button id="hacker" class="hacker-btn">Hacker News</button>
+        <button id="datab" class="datab-btn">DataBase</button>
+    </form>
+</div>
 </body>
 </html>

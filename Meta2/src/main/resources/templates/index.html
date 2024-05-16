@@ -31,7 +31,7 @@
         </div>
     </div-->
     <div class="buttons">
-        <form action="/process" method="post">
+        <form id="myForm" action="/search" method="post">
             <div id="search-bar" class="search-bar">
                 <div class="search-and-switch">
                     <label class="switch block-label">
@@ -39,14 +39,10 @@
                         <span class="slider"></span>
                     </label>
                     <label for="searchText"></label>
-
                     <input type="text" id="searchText" placeholder="Insert..." name="text">
-
-                    <!--input id="searchText" type="text" class="search-input" placeholder="Insert..."-->
                 </div>
             </div>
-
-            <input type="submit" formaction="/search" value="Submit" class="search-button">
+            <input type="submit" onclick="changeFormAction()" value="Submit" class="search-button">
             <input type="submit" formaction="/status" value="Status" class="search-button">
         </form>
 

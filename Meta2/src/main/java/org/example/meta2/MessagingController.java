@@ -3,6 +3,7 @@ package org.example.meta2;
 import googol.client.Client;
 import googol.client.IClient;
 import googol.gateway.IGateway;
+import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -82,7 +83,7 @@ public class MessagingController {
     }
 
     @GetMapping("/status")
-    public String luckySearch() {
+    public String statusPage() {
         System.out.println("Lucky Search Requested");
         return "status";
     }*/
@@ -95,13 +96,42 @@ public class MessagingController {
     }
 
     @PostMapping("/search")
-    public String greenPage(@RequestParam String text) {
-        System.out.println("Received text: " + text);
+    public String searchPage(@RequestParam String text) {
+        System.out.println("Search text: " + text);
+        try {
+            int r = h.searchWords(name, text, 0, true);
+            if (r == -1) {
+                //TODO: decidir como fazer quando não encontrar nada
+            } else{
+                //TODO: imprimir resultados na página
+            }
+        } catch (RemoteException e) {
+            System.out.println("Error searching: " + e.getMessage());
+        } catch (NullPointerException e) {
+            System.out.println("Error: Gateway isn't connected -> " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error in search: " + e.getMessage());
+        }
         return "search";
     }
 
+    @PostMapping("/")
+    public ResponseEntity<String> insertURL(@RequestParam String text) {
+        System.out.println("Insert text: " + text);
+        try {
+            h.insertURL("jonas", text);
+        } catch (RemoteException e) {
+            System.out.println("Error inserting url: " + e.getMessage());
+        } catch (NullPointerException e) {
+            System.out.println("Error: Gateway isn't connected -> " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error in insert: " + e.getMessage());
+        }
+        return ResponseEntity.ok(text);
+    }
+
     @PostMapping("/status")
-    public String redPage(@RequestParam String text) {
+    public String statusPage(@RequestParam String text) {
         System.out.println("Received text: " + text);
         return "status";
     }

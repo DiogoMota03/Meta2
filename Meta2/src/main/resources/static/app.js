@@ -43,6 +43,45 @@ function subscribe() {
     });
 }
 
+/*function changeFormAction() {
+    var form = document.getElementById('myForm');
+    var switchToggle = document.getElementById('searchToggle');
+    if (switchToggle.checked) {
+        form.action = "/search";
+    } else {
+        form.action = "/";
+    }
+}*/
+
+function changeFormAction() {
+    var form = document.getElementById('myForm');
+    var switchToggle = document.getElementById('searchToggle');
+    if (switchToggle.checked) {
+        form.action = "/search";
+    } else {
+        form.action = "/";
+        // Prevent the form from being submitted normally
+            event.preventDefault();
+
+            // Create a FormData object from the form
+            var formData = new FormData(form);
+
+            // Use the Fetch API to submit the form
+            fetch(form.action, {
+                method: form.method,
+                body: formData
+            })
+            .then(response => response.text())
+            .then(text => {
+                // Show a pop-up with the response text
+                alert("Inserting URL <" + text + "> to the queue.");
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+
+}
+
 /*
 function searchRequest() {
     var searchText = document.getElementById("searchText").value;
