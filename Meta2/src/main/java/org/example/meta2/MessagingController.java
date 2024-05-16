@@ -26,11 +26,12 @@ public class MessagingController {
             h = (IGateway) Naming.lookup("XPTO");
             c = new Client();
             h.subscribe("jonas", (IClient) c);
+
         }catch (Exception ex){
             System.out.println("Error: " + ex.getMessage());
         }
 
-        return "index.html";
+        return "index";
     }
 
     @MessageMapping("/message")
@@ -54,6 +55,19 @@ public class MessagingController {
             throw new RuntimeException(e);
         }
         return "search";
+    }
+
+    @GetMapping("/insert")
+    public String insertURL(@RequestParam("s") String message) {
+        System.out.println("Insert link: " + message);
+
+        try {
+            h.insertURL("jonas", message);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+
+        return "lucky";
     }
 
     @GetMapping("/lucky")

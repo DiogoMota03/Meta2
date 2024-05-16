@@ -51,6 +51,11 @@ function searchRequest() {
     window.location.href = "http://localhost:8080/search?s=" + searchText;
 }
 
+function addRequest() {
+    var searchText = document.getElementById("searchText").value;
+    stompClient.send("/app/insert", {}, JSON.stringify({'content': searchText}));
+}
+
 function feelingLuckyRequest() {
     //var searchText = document.getElementById("searchText").value;
     //stompClient.send("/app/lucky", {}, ""));
@@ -81,18 +86,25 @@ function showMessage(message) {
 window.addEventListener('load',
     function () {
         var searchBar = document.getElementById("searchText");
+        var searchToggle = document.getElementById("searchToggle");
 
         searchBar.addEventListener('keydown', function (e) {
             if (e.key === 'Enter' && searchBar.value !== "") {
                 e.preventDefault(); // Prevent form submission
-                searchRequest();
+                if (searchToggle.checked)
+                    searchRequest();
+                else
+                    addRequest();
             }
         });
 
         document.getElementById("search").addEventListener('click', (e) => {
             e.preventDefault();
             if (searchBar.value !== "")
-                searchRequest();
+                if (searchToggle.checked)
+                    searchRequest();
+                else
+                    addRequest();
         });
 
         document.getElementById("feelingLucky").addEventListener('click', (e) => {
@@ -123,7 +135,6 @@ window.addEventListener('load',
         // Add the click event listener to the logo
         document.getElementById("logo").addEventListener('click', logoClickHandler);
 
-        var searchToggle = document.getElementById("searchToggle");
         searchToggle.addEventListener('change', function () {
             var searchText = document.getElementById("searchText");
             var catImage = document.querySelector('.cat img');
