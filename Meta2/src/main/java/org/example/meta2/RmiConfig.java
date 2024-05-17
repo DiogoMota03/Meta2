@@ -19,12 +19,21 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
+
+/**
+ * Configuration class for the RMI service
+ */
 @EnableScheduling
 @Configuration
 public class RmiConfig {
     @Autowired
     private SimpMessagingTemplate template;
 
+    /**
+     * Method to configure the RMI service
+     * @return The RMI service exporter
+     * @throws Exception
+     */
     @Bean
     public RmiServiceExporter rmiServiceExporter() throws Exception {
         try{

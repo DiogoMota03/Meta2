@@ -71,18 +71,6 @@ public class MessagingController {
         return "index";
     }
 
-    @MessageMapping("/message")
-    @SendTo("/topic/messages")
-    public Message onMessage(String message) {
-        System.out.println("Message received " + message);
-        try {
-            Thread.sleep(1000); // simulated delay
-        } catch (InterruptedException e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-        return new Message(HtmlUtils.htmlEscape(message));
-    }
-
 /*
     @GetMapping("/search")
     public String search(@RequestParam("s") String message) {
