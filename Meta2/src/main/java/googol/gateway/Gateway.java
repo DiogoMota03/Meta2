@@ -602,7 +602,7 @@ public class Gateway extends UnicastRemoteObject implements IGateway {
         }
 
 
-        if(result == null || (result.isEmpty() && hackerNewsResults.isEmpty())){ // TODO check
+        if((result == null || result.isEmpty()) && hackerNewsResults.isEmpty()){ // TODO check
             clients.get(name).print_on_client("No results found");
             return -1;
         }

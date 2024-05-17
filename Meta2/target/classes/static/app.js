@@ -112,11 +112,6 @@ function addNewRow() {
     newCell1 = newRow.insertCell(0);
     newText1 = document.createTextNode("New Cell 1");
     newCell1.appendChild(newText1);
-
-
-
-
-
 }
 
 /*
