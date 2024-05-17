@@ -64,16 +64,16 @@ function changeFormAction() {
     } else {
         form.action = "/";
         // Prevent the form from being submitted normally
-            event.preventDefault();
+        event.preventDefault();
 
-            // Create a FormData object from the form
-            var formData = new FormData(form);
+        // Create a FormData object from the form
+        var formData = new FormData(form);
 
-            // Use the Fetch API to submit the form
-            fetch(form.action, {
-                method: form.method,
-                body: formData
-            })
+        // Use the Fetch API to submit the form
+        fetch(form.action, {
+            method: form.method,
+            body: formData
+        })
             .then(response => response.text())
             .then(text => {
                 // Show a pop-up with the response text
@@ -84,6 +84,34 @@ function changeFormAction() {
     }
 
 
+}
+
+function addNewRow() {
+    // Get the table by its id
+    var table = document.getElementById("barrel-table");
+
+// Insert a row at the end of the table
+    var newRow = table.insertRow(-1);
+
+// Insert a cell in the row at index 0
+    var newCell1 = newRow.insertCell(0);
+    var newCell2 = newRow.insertCell(1);
+    var newCell3 = newRow.insertCell(2);
+
+// Append a text node to the cell
+    var newText1 = document.createTextNode("New Cell 1");
+    var newText2 = document.createTextNode("New Cell 2");
+    var newText3 = document.createTextNode("New Cell 3");
+
+    newCell1.appendChild(newText1);
+    newCell2.appendChild(newText2);
+    newCell3.appendChild(newText3);
+
+    table = document.getElementById("common-search");
+    newRow = table.insertRow(-1);
+    newCell1 = newRow.insertCell(0);
+    newText1 = document.createTextNode("New Cell 1");
+    newCell1.appendChild(newText1);
 }
 
 /*
@@ -145,21 +173,21 @@ window.addEventListener('load',
             }
         });
 
-/*
-        document.getElementById("search").addEventListener('click', (e) => {
-            e.preventDefault();
-            if (searchBar.value !== "")
-                if (searchToggle.checked)
-                    searchRequest();
-                else
-                    addRequest();
-        });
+        /*
+                document.getElementById("search").addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (searchBar.value !== "")
+                        if (searchToggle.checked)
+                            searchRequest();
+                        else
+                            addRequest();
+                });
 
-        document.getElementById("feelingLucky").addEventListener('click', (e) => {
-            e.preventDefault();
-            feelingLuckyRequest();
-        });
-        */
+                document.getElementById("feelingLucky").addEventListener('click', (e) => {
+                    e.preventDefault();
+                    feelingLuckyRequest();
+                });
+                */
         // Select the .cat element
         var cat = document.querySelector('.cat');
 

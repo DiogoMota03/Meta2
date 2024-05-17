@@ -3,19 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <title>Lucky Page</title>
-    <link href="/my.css" rel="stylesheet">
+    <link href="/status.css" rel="stylesheet">
     <script src="/webjars/jquery/jquery.min.js"></script>
     <script src="/webjars/sockjs-client/sockjs.min.js"></script>
     <script src="/webjars/stomp-websocket/stomp.min.js"></script>
     <script src="/app.js"></script>
-    <style>
-        body {
-            background-color: red;
-        }
-    </style>
 </head>
 <body>
-<h1>Status page!</h1>
-<!-- Add more content here as needed -->
+<div id="googol-status" class="googol-search">
+
+        <div id="logo" class="logo">
+            <img src="logoGoogol.png" alt="Googol Logo">
+        </div>
+
+        <table id="common-search" class="table table-striped">
+            <thead>
+            <tr>
+                <th>Common Searches</th>
+            </tr>
+            </thead>
+            <tbody id="searches">
+            </tbody>
+        </table>
+
+        <table id="barrel-table" class="table table-striped">
+            <thead>
+            <tr>
+                <th>Barrel ID</th>
+                <th>Response Time</th>
+                <th>Repartition</th>
+            </tr>
+            </thead>
+            <tbody id="messages">
+            </tbody>
+        </table>
+
+
+        <input type="submit" onclick="addNewRow()" value="Submit" class="search-button">
+
+
+</div>
 </body>
 </html>
