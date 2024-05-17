@@ -26,35 +26,10 @@
 </div>
 <div id="main-content" class="container">
     <div class="row">
-        <!--div class="col-md-12">
-            <table id="conversation" class="table table-striped">
-                <tbody id="searchesHacker">
-                <tr>
-                    <h1>
-                        <a class="link" href="https://www.youtube.com/"> ola</a>
-                    </h1>
-                </tr>
-                <tr>
-                    <p class="para">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                </tr>
-                </tbody>
-                <tbody id="searchesData">
-                <tr>
-                    <h1>
-                        <a class="link" href="https://www.youtube.com/"> ola2</a>
-                    </h1>
-                </tr>
-                <tr>
-                    <p class="para">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                </tr>
-                </tbody>
-            </table>
-        </div-->
-        <h1>Search Results</h1>
         <ul>
             <li th:each="result : ${results}">
-                <p th:text="${result.url}"></p>
-                <p th:text="${result.title}"></p>
+                <a class="title" th:href="${result.url}" th:text="${result.title}"></a>
+                <p class="para" th:text="${#strings.abbreviate(#strings.arrayJoin(result.content, ' '), 300)}"></p>
             </li>
         </ul>
     </div>
