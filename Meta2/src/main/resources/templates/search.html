@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -26,7 +26,7 @@
 </div>
 <div id="main-content" class="container">
     <div class="row">
-        <div class="col-md-12">
+        <!--div class="col-md-12">
             <table id="conversation" class="table table-striped">
                 <tbody id="searchesHacker">
                 <tr>
@@ -49,7 +49,14 @@
                 </tr>
                 </tbody>
             </table>
-        </div>
+        </div-->
+        <h1>Search Results</h1>
+        <ul>
+            <li th:each="result : ${results}">
+                <p th:text="${result.url}"></p>
+                <p th:text="${result.title}"></p>
+            </li>
+        </ul>
     </div>
 </div>
 </body>

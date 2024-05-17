@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.HtmlUtils;
 
 import javax.swing.*;
@@ -92,6 +93,7 @@ public class MessagingController {
         return "status";
     }*/
 
+    /* todo
     @PostMapping("/search")
     public String searchPage(@RequestParam String text) {
         System.out.println("Search text: " + text);
@@ -101,9 +103,9 @@ public class MessagingController {
                 //TODO: decidir como fazer quando não encontrar nada
             } else{
                 List<URLData> results = h.getResult();
-                for (URLData result : results)
+                for (URLData result : results) {
                     System.out.println("------> " + result.getUrl() + result.getTitle() + Arrays.toString(result.getContent()));
-                //TODO: imprimir resultados na página
+                }
             }
         } catch (RemoteException e) {
             System.out.println("Error searching: " + e.getMessage());
@@ -113,6 +115,24 @@ public class MessagingController {
             System.out.println("Error in search: " + e.getMessage());
         }
         return "search";
+    } */
+
+    @PostMapping("/search")
+    public ModelAndView searchPage(@RequestParam String text) {
+        System.out.println("Search text: " + text);
+        ModelAndView mav = new ModelAndView("search");
+        try {
+            int r = h.searchWords(name, text, 0, true);
+            if (r == -1) {
+                //TODO: decidir como fazer quando não encontrar nada
+            } else{
+                List<URLData> results = h.getResult();
+                mav.addObject("results", results);
+            }
+        } catch (Exception e) {
+            // handle exception
+        }
+        return mav;
     }
 
     @PostMapping("/")

@@ -61,6 +61,7 @@ function changeFormAction() {
 
     if (switchToggle.checked) {
         form.action = "/search";
+        searchRequest();
     } else {
         form.action = "/";
         // Prevent the form from being submitted normally
@@ -164,7 +165,7 @@ window.addEventListener('load',
             }
         var searchToggle = document.getElementById("searchToggle");
 
-        searchBar.addEventListener('keydown', function (e) {
+        /*searchBar.addEventListener('keydown', function (e) {
             if (e.key === 'Enter' && searchBar.value !== "") {
                 e.preventDefault(); // Prevent form submission
                 if (searchToggle.checked)
@@ -173,6 +174,7 @@ window.addEventListener('load',
                     addRequest();
             }
         });
+        */
 
 
         /*
