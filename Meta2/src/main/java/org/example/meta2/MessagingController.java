@@ -4,11 +4,13 @@ import googol.client.Client;
 import googol.client.IClient;
 import googol.gateway.Gateway;
 import googol.gateway.IGateway;
+import org.springframework.beans.factory.annotation.Autowired;
 import googol.queue.URLData;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,14 +49,14 @@ public class MessagingController {
 
     @MessageMapping("/message")
     @SendTo("/topic/messages")
-    public Message onMessage(Message message) {
+    public Message onMessage(String message) {
         System.out.println("Message received " + message);
         try {
             Thread.sleep(1000); // simulated delay
         } catch (InterruptedException e) {
             System.out.println("Error: " + e.getMessage());
         }
-        return new Message(HtmlUtils.htmlEscape(message.content().toUpperCase()));
+        return new Message(HtmlUtils.htmlEscape(message));
     }
 
 /*
@@ -151,8 +153,8 @@ public class MessagingController {
     }
 
     @PostMapping("/status")
-    public String statusPage(@RequestParam String text) {
-        System.out.println("Received text: " + text);
+    public String statusPage() {
+        System.out.println("Received text: ");
         return "status";
     }
 }

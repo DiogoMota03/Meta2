@@ -6,12 +6,9 @@ import googol.client.IClient;
 import googol.queue.IURL_Queue;
 import googol.queue.URLData;
 import googol.queue.URL_Queue;
-import org.example.meta2.HackerNewsController;
-import org.example.meta2.HackerNewsItemRecord;
-import org.springframework.stereotype.Service;
+import org.example.meta2.*;
 
 import java.net.*;
-import java.net.UnknownHostException;
 import java.rmi.*;
 import java.rmi.ConnectException;
 import java.rmi.server.*;
@@ -201,8 +198,14 @@ public class Gateway extends UnicastRemoteObject implements IGateway {
                 IISBs barrel = barrels.get(i);
                 double avgSearchTime = barrel.getAvgSearchTime();
                 String format = String.format("%.2f", avgSearchTime);
+                String repartition;
+                if (barrel.getId() == 0) {
+                    repartition = "A-M";
+                } else {
+                    repartition = "N-Z";
+                }
 
-                info.append("\t" + "Barrel ").append(i).append("\t").append(format).append("ms\n");
+                info.append("\t" + "Barrel ").append(i).append("\t").append(format).append("ms").append("\t").append(repartition).append("\n");
             }
         }
 
@@ -213,6 +216,15 @@ public class Gateway extends UnicastRemoteObject implements IGateway {
             if (top10Searches.isEmpty()) {
                 info.append("\tNothing to be shown");
             }
+        }
+
+        try {
+            String url = "rmi://localhost:1090/MyService";
+            IRmiService service = (IRmiService) Naming.lookup(url);
+            String response = service.updateAdmin(info.toString());
+            System.out.println("Response from RMI service: " + response);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         clients.get(name).print_on_client(info.toString());
@@ -787,8 +799,6 @@ public class Gateway extends UnicastRemoteObject implements IGateway {
     public void printOnServer(String s) throws RemoteException {
         System.out.println(s);
     }
-
-
 
     /**
      * Main method the program server, finds the current IP of the machine, creates a new server object and binds it to the RMI registry while

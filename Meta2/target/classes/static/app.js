@@ -11,7 +11,6 @@ function connect() {
 
 connect();
 
-
 // Conjunto de instruções que vai mexer com frontend (acho eu)
 /*function setConnected(connected) {
     if (connected) {
@@ -32,13 +31,13 @@ function subscribe() {
     var socket = new SockJS('/ws');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
-        setConnected(true); // TODO
+
         console.log('Subscribed: ' + frame);
 
         // Subscribe to the topic
         // The server will send messages to this topic
-        stompClient.subscribe('/app/status', function (message) {
-            showMessage(JSON.parse(message.body).content);
+        stompClient.subscribe('/topic/status', function (message) {
+            showMessage(message.body);
         });
     });
 }
@@ -83,8 +82,6 @@ function changeFormAction() {
             })
             .catch(error => console.error('Error:', error));
     }
-
-
 }
 
 function addNewRow() {
@@ -136,6 +133,12 @@ function feelingLuckyRequest() {
 }
 */
 
+function status(){
+    console.log("------------------------------------");
+    var form = document.getElementById('myForm');
+    form.action = "/status";
+}
+
 function disconnect() {
     if (stompClient !== null) {
         stompClient.disconnect();
@@ -152,8 +155,10 @@ function sendMessage() {
 
 function showMessage(message) {
     // Manipular elementos frontend
-    document.getElementById("messages").insertRow();
-    document.getElementById("messages").append(message);
+    var messageDiv = document.getElementById("server-message");
+
+    // Update the content of the div
+    messageDiv.textContent = message;
 }
 
 window.addEventListener('load',

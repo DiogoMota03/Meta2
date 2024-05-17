@@ -9,37 +9,41 @@
     <script src="/webjars/stomp-websocket/stomp.min.js"></script>
     <script src="/app.js"></script>
 </head>
-<body>
+<body onload="subscribe()">
 <div id="googol-status" class="googol-search">
 
-        <div id="logo" class="logo">
-            <img src="logoGoogol.png" alt="Googol Logo">
-        </div>
+    <div id="logo" class="logo">
+        <img src="logoGoogol.png" alt="Googol Logo">
+    </div>
 
-        <table id="common-search" class="table table-striped">
-            <thead>
-            <tr>
-                <th>Common Searches</th>
-            </tr>
-            </thead>
-            <tbody id="searches">
-            </tbody>
-        </table>
+    <div id="server-message">
+        color: #ff0000
+    </div>
 
-        <table id="barrel-table" class="table table-striped">
-            <thead>
-            <tr>
-                <th>Barrel ID</th>
-                <th>Response Time</th>
-                <th>Repartition</th>
-            </tr>
-            </thead>
-            <tbody id="messages">
-            </tbody>
-        </table>
+    <table id="common-search" class="table table-striped">
+        <thead>
+        <tr>
+            <th>Common Searches</th>
+        </tr>
+        </thead>
+        <tbody id="searches">
+        </tbody>
+    </table>
+
+    <table id="barrel-table" class="table table-striped">
+        <thead>
+        <tr>
+            <th>Barrel ID</th>
+            <th>Response Time</th>
+            <th>Repartition</th>
+        </tr>
+        </thead>
+        <tbody id="messages">
+        </tbody>
+    </table>
 
 
-        <input type="submit" onclick="addNewRow()" value="Submit" class="search-button">
+    <input type="submit" onclick="addNewRow()" value="Submit" class="search-button">
 
 
 </div>

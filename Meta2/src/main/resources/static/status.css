@@ -59,5 +59,10 @@ table {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
-    background: #f8f9fa;
+    color: #f8f9fa;
 }
+
+#server-message {
+    color: #f8f9fa; /* Change this to any color you want */
+}
+
