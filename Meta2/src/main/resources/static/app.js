@@ -158,8 +158,9 @@ function showMessage(message) {
 window.addEventListener('load',
     function () {
         var searchBar = document.getElementById("searchText");
-        if (searchBar && localStorage.getItem('searchText')) {
-                searchBar.value = localStorage.getItem('searchText');
+        var searchBar_w = document.getElementById("searchText_w");
+        if (searchBar_w && localStorage.getItem('searchText')) {
+                searchBar_w.value = localStorage.getItem('searchText');
             }
         var searchToggle = document.getElementById("searchToggle");
 
@@ -172,6 +173,7 @@ window.addEventListener('load',
                     addRequest();
             }
         });
+
 
         /*
                 document.getElementById("search").addEventListener('click', (e) => {
@@ -212,6 +214,8 @@ window.addEventListener('load',
         // Add the click event listener to the logo
         document.getElementById("logo").addEventListener('click', logoClickHandler);
 
+
+
         searchToggle.addEventListener('change', function () {
             var searchText = document.getElementById("searchText");
             var catImage = document.querySelector('.cat img');
@@ -223,5 +227,8 @@ window.addEventListener('load',
                 catImage.src = 'cat_inserting.png';
             }
         });
+
+
+
 
     }, false);

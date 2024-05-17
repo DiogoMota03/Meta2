@@ -88,13 +88,6 @@ public class MessagingController {
         return "status";
     }*/
 
-
-    @PostMapping("/process")
-    public String processText(@RequestParam String text) {
-        System.out.println("Received text: " + text);
-        return "index"; // Redirect back to index page after processing
-    }
-
     @PostMapping("/search")
     public String searchPage(@RequestParam String text) {
         System.out.println("Search text: " + text);

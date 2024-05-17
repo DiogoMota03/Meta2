@@ -607,7 +607,6 @@ public class Gateway extends UnicastRemoteObject implements IGateway {
             return -1;
         }
 
-
         //Print the result on the client
         showPage(name, index, result);
 
