@@ -29,7 +29,7 @@ connect();
 
 // TODO use for status
 function subscribe() {
-    var socket = new SockJS('/my-websocket');
+    var socket = new SockJS('/ws');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         setConnected(true); // TODO
@@ -37,7 +37,7 @@ function subscribe() {
 
         // Subscribe to the topic
         // The server will send messages to this topic
-        stompClient.subscribe('/topic/status', function (message) {
+        stompClient.subscribe('/app/status', function (message) {
             showMessage(JSON.parse(message.body).content);
         });
     });
