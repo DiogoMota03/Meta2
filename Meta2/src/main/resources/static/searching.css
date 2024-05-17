@@ -11,10 +11,11 @@ body {
     margin-right: 50px;
 }
 
-.form-inline {
+#myForm {
     margin: 30px;
     display: flex;
     align-items: center;
+    margin-bottom: 50px;
 }
 
 .logo {
@@ -53,4 +54,18 @@ input[type="text"] {
     outline: none;
     box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
     transition: box-shadow 0.3s ease-in-out;
+}
+
+.link {
+    color: #5271FF;
+    margin-left: 70px;
+    font-size: 24px;
+}
+
+.para {
+    color: white;
+    font-size: 15px;
+    margin-left: 120px;
+    margin-right: 500px;
+    margin-bottom: 50px;
 }

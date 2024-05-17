@@ -11,18 +11,46 @@
 </head>
 <body>
 <div id="googol-search" class="googol-search">
-    <form class="form-inline">
+    <form id="myForm" action="/search" method="post">
         <div id="logo" class="logo">
             <img src="logoGoogol.png" alt="Googol Logo">
         </div>
         <div id="search-bar" class="search-bar">
             <div class="search">
-                <input id="searchText" type="text" class="search-input" placeholder="Search words...">
+                <input id="searchText" type="text" class="search-input" placeholder="Search words..." name="text">
             </div>
         </div>
         <input type="submit" formaction="/search" value="Submit" class="search-button">
         <input type="submit" formaction="/status" value="Status" class="search-button">
     </form>
+</div>
+<div id="main-content" class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <table id="conversation" class="table table-striped">
+                <tbody id="searchesHacker">
+                <tr>
+                    <h1>
+                        <a class="link" href="https://www.youtube.com/"> ola</a>
+                    </h1>
+                </tr>
+                <tr>
+                    <p class="para">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                </tr>
+                </tbody>
+                <tbody id="searchesData">
+                <tr>
+                    <h1>
+                        <a class="link" href="https://www.youtube.com/"> ola2</a>
+                    </h1>
+                </tr>
+                <tr>
+                    <p class="para">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 </body>
 </html>
