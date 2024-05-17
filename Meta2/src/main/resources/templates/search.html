@@ -36,7 +36,7 @@
             </ul>
         </div>
 
-        <div class="navigation-buttons">
+        <div class="navigation-buttons" th:if="${not #lists.isEmpty(results)}">
             <button id="previous-button" class="search-button">Previous</button>
             <button id="next-button" class="search-button">Next</button>
         </div>

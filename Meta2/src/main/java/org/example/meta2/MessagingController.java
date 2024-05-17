@@ -26,6 +26,7 @@ import javax.swing.*;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -132,7 +133,11 @@ public class MessagingController {
         try {
             int r = h.searchWords(name, text, 0, true);
             if (r == -1) {
-                //TODO: decidir como fazer quando não encontrar nada
+                List<URLData> results = Collections.emptyList();
+                Context context = new Context();
+                context.setVariable("results", results);
+                String htmlContent = thymeleafViewResolver.getTemplateEngine().process("search", context);
+                return ResponseEntity.ok(htmlContent);
             } else{
                 List<URLData> results = h.getResult();
                 Context context = new Context();
@@ -141,10 +146,9 @@ public class MessagingController {
                 return ResponseEntity.ok(htmlContent);
             }
         } catch (Exception e) {
-            // handle exception
+            // handle exception-
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred: " + e.getMessage());
         }
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred");
     }
 
     @PostMapping("/")
