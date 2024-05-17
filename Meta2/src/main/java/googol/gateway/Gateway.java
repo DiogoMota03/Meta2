@@ -68,6 +68,8 @@ public class Gateway extends UnicastRemoteObject implements IGateway {
      * */
     private int lastBarrelOdd = -1;
 
+    private static List<URLData> result = new ArrayList<>();
+
     /**
      * Primary constructor for this class
      * @throws RemoteException If any communication error occurs during the remote call
@@ -570,7 +572,7 @@ public class Gateway extends UnicastRemoteObject implements IGateway {
         }
 
         //List to store the final result
-        List<URLData> result = hackerNewsResultsURLData;
+        result = hackerNewsResultsURLData;
 
         //If one of the lists is empty, the result is the other list
         if (even.length == 0) {
@@ -611,6 +613,11 @@ public class Gateway extends UnicastRemoteObject implements IGateway {
         showPage(name, index, result);
 
         return getMaxIndex(result.size());
+    }
+
+    @Override
+    public List<URLData> getResult() throws RemoteException {
+        return result;
     }
 
     /**

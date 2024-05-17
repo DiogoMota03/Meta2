@@ -2,7 +2,9 @@ package org.example.meta2;
 
 import googol.client.Client;
 import googol.client.IClient;
+import googol.gateway.Gateway;
 import googol.gateway.IGateway;
+import googol.queue.URLData;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -16,6 +18,8 @@ import org.springframework.web.util.HtmlUtils;
 import javax.swing.*;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
+import java.util.Arrays;
+import java.util.List;
 
 
 @Controller
@@ -96,6 +100,9 @@ public class MessagingController {
             if (r == -1) {
                 //TODO: decidir como fazer quando não encontrar nada
             } else{
+                List<URLData> results = h.getResult();
+                for (URLData result : results)
+                    System.out.println("------> " + result.getUrl() + result.getTitle() + Arrays.toString(result.getContent()));
                 //TODO: imprimir resultados na página
             }
         } catch (RemoteException e) {

@@ -2,6 +2,7 @@ package googol.gateway;
 
 import googol.barrel.IISBs;
 import googol.client.IClient;
+import googol.queue.URLData;
 
 import java.rmi.*;
 import java.rmi.Remote;
@@ -29,6 +30,8 @@ public interface IGateway extends Remote {
     void finishProcess(String url) throws RemoteException;
 
     int searchWords(String name, String s, int index, boolean flag) throws RemoteException;
+
+    List<URLData> getResult() throws RemoteException;
 
     void showMenuAssociated(String name) throws RemoteException;
 
