@@ -119,6 +119,7 @@ public class Gateway extends UnicastRemoteObject implements IGateway {
      * Method to check if the barrels are still alive
      */
     public void isAlive() {
+        boolean change = false;
         if (!barrels.isEmpty()) {
             //System.out.println("Barrels connected: " + getBarrelsAlive());
             int i = 0;
@@ -135,12 +136,21 @@ public class Gateway extends UnicastRemoteObject implements IGateway {
                 } catch (ConnectException e) {
                     //System.out.println("Barrel " + i + " is dead");
                     barrelIsAlive.set(i, false);
+                    change = true;
                 } catch (Exception e) {
                     //System.out.println("An error occurred while calling for barrel...");
                     barrelIsAlive.set(i, false);
+                    change = true;
                 }
                 //System.out.println("Barrel " + i + " is alive: " + barrelIsAlive.get(i));
                 i++;
+            }
+            if (change) {
+                try {
+                    getStatus("");
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
     }
@@ -192,18 +202,24 @@ public class Gateway extends UnicastRemoteObject implements IGateway {
 
         String top10Searches;
 
-        StringBuilder info = new StringBuilder("Active Barrels: " + getBarrelsAlive() + "\n");
+        StatusData statusData = new StatusData(new ArrayList<>(), "");
+
+        StringBuilder info = new StringBuilder("");
         for (int i = 0; i < barrelIsAlive.size(); i++) {
             if (barrelIsAlive.get(i)) {
+
                 IISBs barrel = barrels.get(i);
                 double avgSearchTime = barrel.getAvgSearchTime();
                 String format = String.format("%.2f", avgSearchTime);
                 String repartition;
-                if (barrel.getId() == 0) {
+                if (barrel.getType() == 0) {
                     repartition = "A-M";
                 } else {
                     repartition = "N-Z";
                 }
+
+                BarrelInfoData barrelInfoData = new BarrelInfoData(String.valueOf(i), format, repartition);
+                statusData.getBarrels().add(barrelInfoData);
 
                 info.append("\t" + "Barrel ").append(i).append("\t").append(format).append("ms").append("\t").append(repartition).append("\n");
             }
@@ -213,21 +229,21 @@ public class Gateway extends UnicastRemoteObject implements IGateway {
 
         if (top10Searches != null) {
             info.append("\n> TOP10 Searches:\n").append(top10Searches);
+            statusData.setTop10("\n> TOP10 Searches:\n" + top10Searches);
             if (top10Searches.isEmpty()) {
                 info.append("\tNothing to be shown");
+                statusData.setTop10("\tNothing to be shown");
             }
         }
 
         try {
             String url = "rmi://localhost:1090/MyService";
             IRmiService service = (IRmiService) Naming.lookup(url);
-            String response = service.updateAdmin(info.toString());
-            System.out.println("Response from RMI service: " + response);
+            StatusData response = service.updateAdmin(statusData);
+            System.out.println("Response from RMI service: ");
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        clients.get(name).print_on_client(info.toString());
     }
 
     /**
@@ -499,6 +515,7 @@ public class Gateway extends UnicastRemoteObject implements IGateway {
         //If both arrays are empty, there is no word to search + hackerNews has no results
         if(evens.isEmpty() && odds.isEmpty() && hackerNewsUrls.isEmpty()){ // TODO check
             clients.get(name).print_on_client("No words to search");
+            getStatus("");
             return -1;
         }
 
@@ -575,11 +592,13 @@ public class Gateway extends UnicastRemoteObject implements IGateway {
         //If it wasn't possible to get the result from any barrel, send an error message to the client
         if (!sendOdd || !sendEven) {
             clients.get(name).print_on_client("Error on server, please try again");
+            getStatus("");
             return -1;
         }
 
         if ((resultEven == null || resultOdd == null) && hackerNewsResults.isEmpty()) { // TODO check
             clients.get(name).print_on_client("No results found!");
+            getStatus("");
             return -1;
         }
 
@@ -618,11 +637,14 @@ public class Gateway extends UnicastRemoteObject implements IGateway {
 
         if((result == null || result.isEmpty()) && hackerNewsResults.isEmpty()){ // TODO check
             clients.get(name).print_on_client("No results found");
+            getStatus("");
             return -1;
         }
 
         //Print the result on the client
         showPage(name, index, result);
+
+        getStatus("");
 
         return getMaxIndex(result.size());
     }
@@ -778,7 +800,7 @@ public class Gateway extends UnicastRemoteObject implements IGateway {
                 barrel.setType(i % 2);
                 barrels.set(i, barrel);
                 barrelIsAlive.set(i, true);
-                System.out.println("Barrel " + barrel.getId() + " registered");
+                System.out.println("Barrel " + barrel.getId() + " registered with type " + barrel.getType());
                 created = true;
                 break;
             }
@@ -794,6 +816,7 @@ public class Gateway extends UnicastRemoteObject implements IGateway {
         }
 
         updateBarrels(barrel.getType(), barrel.getId());
+        getStatus("");
     }
 
     public void printOnServer(String s) throws RemoteException {

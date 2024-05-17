@@ -3,97 +3,52 @@ package org.example.meta2;
 import ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class StatusData implements Serializable {
 
     /**
-     * Barrel id
+     * Active barrels
      */
-    private String id;
-
-    /**
-     * Time of response of the barrel
-     */
-    private String time;
-
-    /**
-     * Type of repartition of the barrel
-     */
-    private String repartition;
+    private ArrayList<BarrelInfoData> barrels = new ArrayList<>();
 
     /**
      * Top 10 searches
      */
-    private String[] top10;
+    private String top10;
 
     /**
      * Constructor for the StatusData class
-     * @param id Barrel id
-     * @param time Time of response of the barrel
-     * @param repartition Type of repartition of the barrel
+     * @param
      */
-    public StatusData(String id, String time, String repartition, String[] top10) {
-        this.id = id;
-        this.time = time;
-        this.repartition = repartition;
+    public StatusData(ArrayList<BarrelInfoData> barrels, String top10) {
+        this.barrels = barrels;
         this.top10 = top10;
     }
 
     //set getters and setters with javadoc
 
     /**
-     * Getter for the id
-     * @return The id
+     * Getter for the barrels
+     * @return The barrels
      */
-    public String getId() {
-        return id;
+    public ArrayList<BarrelInfoData> getBarrels() {
+        return barrels;
     }
 
     /**
-     * Setter for the id
-     * @param id The id to set
+     * Setter for the barrels
+     * @param barrels The barrels to set
      */
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    /**
-     * Getter for the time
-     * @return The time
-     */
-    public String getTime() {
-        return time;
-    }
-
-    /**
-     * Setter for the time
-     * @param time The time to set
-     */
-    public void setTime(String time) {
-        this.time = time;
-    }
-
-    /**
-     * Getter for the repartition
-     * @return The repartition
-     */
-    public String getRepartition() {
-        return repartition;
-    }
-
-    /**
-     * Setter for the repartition
-     * @param repartition The repartition to set
-     */
-    public void setRepartition(String repartition) {
-        this.repartition = repartition;
+    public void setBarrels(ArrayList<BarrelInfoData> barrels) {
+        this.barrels = barrels;
     }
 
     /**
      * Getter for the top 10 searches
      * @return The top 10 searches
      */
-    public String[] getTop10() {
+    public String getTop10() {
         return top10;
     }
 
@@ -101,7 +56,7 @@ public class StatusData implements Serializable {
      * Setter for the top 10 searches
      * @param top10 The top 10 searches to set
      */
-    public void setTop10(String[] top10) {
+    public void setTop10(String top10) {
         this.top10 = top10;
     }
 }

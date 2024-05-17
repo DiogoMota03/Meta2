@@ -21,7 +21,7 @@ public class RmiService implements IRmiService {
     }
 
     @Override
-    public String updateAdmin(String info) throws RemoteException {
+    public StatusData updateAdmin(StatusData info) throws RemoteException {
         System.out.println(info);
 
         try{

@@ -37,7 +37,7 @@ function subscribe() {
         // Subscribe to the topic
         // The server will send messages to this topic
         stompClient.subscribe('/topic/status', function (message) {
-            showMessage(message.body);
+            showMessage(JSON.parse(message.body));
         });
     });
 }
@@ -85,9 +85,9 @@ function changeFormAction() {
     }
 }
 
-function addNewRow() {
+function addNewRow(tableID, id, time, repartition) {
     // Get the table by its id
-    var table = document.getElementById("barrel-table");
+    var table = document.getElementById(tableID);
 
 // Insert a row at the end of the table
     var newRow = table.insertRow(-1);
@@ -98,19 +98,13 @@ function addNewRow() {
     var newCell3 = newRow.insertCell(2);
 
 // Append a text node to the cell
-    var newText1 = document.createTextNode("New Cell 1");
-    var newText2 = document.createTextNode("New Cell 2");
-    var newText3 = document.createTextNode("New Cell 3");
+    var newText1 = document.createTextNode(id);
+    var newText2 = document.createTextNode(time);
+    var newText3 = document.createTextNode(repartition);
 
     newCell1.appendChild(newText1);
     newCell2.appendChild(newText2);
     newCell3.appendChild(newText3);
-
-    table = document.getElementById("common-search");
-    newRow = table.insertRow(-1);
-    newCell1 = newRow.insertCell(0);
-    newText1 = document.createTextNode("New Cell 1");
-    newCell1.appendChild(newText1);
 }
 
 /*
@@ -155,11 +149,21 @@ function sendMessage() {
 }
 
 function showMessage(message) {
+    var table = document.getElementById("barrel-table");
+    var rows = table.getElementsByTagName("tr");
+    while (rows.length > 1) {
+        table.deleteRow(1);
+    }
+
+    for (var b in message.barrels) {
+        addNewRow("barrel-table", message.barrels[b].id, message.barrels[b].time, message.barrels[b].repartition);
+    }
+
     // Manipular elementos frontend
     var messageDiv = document.getElementById("server-message");
 
     // Update the content of the div
-    messageDiv.textContent = message;
+    messageDiv.textContent = message.top10;
 }
 
 window.addEventListener('load',
