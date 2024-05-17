@@ -32,13 +32,29 @@ import java.util.List;
 
 @Controller
 public class MessagingController {
+    /**
+     * Template to render the view
+     */
     private IGateway h;
+    /**
+     * Client to receive the messages
+     */
     private Client c;
+    /**
+     * Name of the client
+     */
     private String name;
 
+    /**
+     * Thymeleaf view resolver to render the templates
+     */
     @Autowired
     private ThymeleafViewResolver thymeleafViewResolver;
 
+    /**
+     * Redirects to the index page
+     * @return index page
+     */
     @GetMapping("/")
     public String redirect() {
         try {
@@ -127,6 +143,12 @@ public class MessagingController {
         return "search";
     } */
 
+    /**
+     * Endpoint called to search for a word
+     * @param text word to search
+     * @param page page to show - changed with next/orevious buttons
+     * @return ResponseEntity with the search page
+     */
     @PostMapping("/search")
     public ResponseEntity<String> searchPage(@RequestParam String text, @RequestParam(defaultValue = "0") int page) {
         System.out.println("Search text: " + text);
@@ -151,6 +173,12 @@ public class MessagingController {
         }
     }
 
+
+    /**
+     * Endpoint called to insert an URL
+     * @param text URL to insert
+     * @return ResponseEntity with the URL inserted
+     */
     @PostMapping("/")
     public ResponseEntity<String> insertURL(@RequestParam String text) {
         System.out.println("Insert text: " + text);
@@ -166,6 +194,10 @@ public class MessagingController {
         return ResponseEntity.ok(text);
     }
 
+    /**
+     * Endpoint called to show the status page
+     * @return status page
+     */
     @PostMapping("/status")
     public String statusPage() {
         System.out.println("Received text: ");

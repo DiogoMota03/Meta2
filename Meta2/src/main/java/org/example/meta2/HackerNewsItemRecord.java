@@ -6,6 +6,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true) // This indicates that any properties not bound in this type should be
                                             // ignored.
+/**
+ * Represents a HackerNews item
+ * */
 public record HackerNewsItemRecord(
         Integer id, // The item's unique id.
         Boolean deleted, // true if the item is deleted.

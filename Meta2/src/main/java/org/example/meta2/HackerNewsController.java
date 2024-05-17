@@ -16,14 +16,18 @@ import java.util.ArrayList;
 //    %20 -> space
 // List all: http://localhost:8080/topstories
 
-
+/**
+ * Controller for the Hacker News API
+ */
 @RestController
 public class HackerNewsController {
     private static final Logger logger = LoggerFactory.getLogger(HackerNewsController.class);
 
-
-    //@GetMapping("/topstories")
-    //@ResponseBody
+    /**
+     * Get the top stories from Hacker News
+     * @param searchWord The word to search in the stories
+     * @return The top stories from Hacker News
+     */
     public List<HackerNewsItemRecord> hackerNewsTopStories(String searchWord) {
         // TODO: Get IDs of top stories
 
