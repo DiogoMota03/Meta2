@@ -6,6 +6,8 @@ import googol.gateway.Gateway;
 import googol.gateway.IGateway;
 import org.springframework.beans.factory.annotation.Autowired;
 import googol.queue.URLData;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.HtmlUtils;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
 import javax.swing.*;
 import java.rmi.Naming;
@@ -30,6 +34,9 @@ public class MessagingController {
     private IGateway h;
     private Client c;
     private String name;
+
+    @Autowired
+    private ThymeleafViewResolver thymeleafViewResolver;
 
     @GetMapping("/")
     public String redirect() {
@@ -120,21 +127,24 @@ public class MessagingController {
     } */
 
     @PostMapping("/search")
-    public ModelAndView searchPage(@RequestParam String text) {
+    public ResponseEntity<String> searchPage(@RequestParam String text, @RequestParam(defaultValue = "0") int page) {
         System.out.println("Search text: " + text);
-        ModelAndView mav = new ModelAndView("search");
         try {
             int r = h.searchWords(name, text, 0, true);
             if (r == -1) {
                 //TODO: decidir como fazer quando não encontrar nada
             } else{
                 List<URLData> results = h.getResult();
-                mav.addObject("results", results);
+                Context context = new Context();
+                context.setVariable("results", results.subList(page * 10, Math.min((page + 1) * 10, results.size())));
+                String htmlContent = thymeleafViewResolver.getTemplateEngine().process("search", context);
+                return ResponseEntity.ok(htmlContent);
             }
         } catch (Exception e) {
             // handle exception
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred: " + e.getMessage());
         }
-        return mav;
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred");
     }
 
     @PostMapping("/")

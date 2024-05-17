@@ -53,6 +53,7 @@ function subscribe() {
 }*/
 
 function changeFormAction() {
+
     var form = document.getElementById('myForm');
     var switchToggle = document.getElementById('searchToggle');
     var searchBar = document.getElementById("searchText");
@@ -163,10 +164,11 @@ function showMessage(message) {
 
 window.addEventListener('load',
     function () {
+        //var page = localStorage.getItem('page') ? parseInt(localStorage.getItem('page')) : 0;
         var searchBar = document.getElementById("searchText");
-        var searchBar_w = document.getElementById("searchText_w");
-        if (searchBar_w && localStorage.getItem('searchText')) {
-                searchBar_w.value = localStorage.getItem('searchText');
+        var searchBar = document.getElementById("searchText");
+        if (searchBar && localStorage.getItem('searchText')) {
+                searchBar.value = localStorage.getItem('searchText');
             }
         var searchToggle = document.getElementById("searchToggle");
 
