@@ -26,6 +26,21 @@ body {
     width: 100%; /* Adjust the width of the logo image */
     height: auto; /* Maintain aspect ratio */
 }
+.conn-button {
+    display: flex;
+
+    background-color: #f8f9fa;
+    border: 1px solid #dfe1e5;
+    color: #3c4043;
+    font-size: 12px;
+    padding: 10px 20px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    margin: 5px;
+    margin-bottom: 50px;
+    margin-left: 25%;
+}
 
 .search-button {
     background-color: #f8f9fa;
@@ -67,5 +82,5 @@ input[type="text"] {
     font-size: 15px;
     margin-left: 120px;
     margin-right: 500px;
-    margin-bottom: 50px;
+
 }

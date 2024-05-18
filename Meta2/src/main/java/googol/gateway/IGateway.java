@@ -44,4 +44,6 @@ public interface IGateway extends Remote {
     void barrelRegistration(IISBs barrel) throws RemoteException;
 
     void printOnServer(String s) throws RemoteException;
+
+    List<String> showAssociatedURLsResults(String name, String url) throws RemoteException;
 }

@@ -32,6 +32,7 @@
                 <li th:each="result, stat : ${results}" th:if="${stat.count <= 10}">
                     <a class="title" th:href="${result.url}" th:text="${result.title}"></a>
                     <p class="para" th:text="${#strings.abbreviate(#strings.arrayJoin(result.content, ' '), 300)}"></p>
+                    <button type="button" class="conn-button" th:attr="data-url=${result.url}" onclick="showPopup(this)">Show Connections</button>
                 </li>
             </ul>
         </div>
@@ -43,6 +44,42 @@
 
     </div>
 </ul>
+<script>
+    function showPopup(button) {
+        var url = button.getAttribute("data-url");
+
+        $.ajax({
+            url: '/showAssociatedURLs',
+            type: 'POST',
+            data: {
+                url: url
+            },
+            success: function(response) {
+                var associatedUrls = response.join("\n");
+                alert(associatedUrls);
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    }
+</script>
+<script>
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+        });
+    }
+</script>
 <script>
     $(document).ready(function() {
     var page = 0;

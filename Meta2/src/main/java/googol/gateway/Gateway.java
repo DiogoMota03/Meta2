@@ -676,6 +676,27 @@ public class Gateway extends UnicastRemoteObject implements IGateway {
         //System.out.println("Showing URLs");
     }
 
+    @Override
+    public List<String> showAssociatedURLsResults(String name, String url) throws RemoteException {
+       System.out.println("Showing associated URLs for Web Client");
+
+        ArrayList<String> result = null;
+
+        for (int i = 0; i < barrelIsAlive.size(); i++) {
+            if (barrelIsAlive.get(i)) {
+                //System.out.println("Barrel " + i + " is alive and sending request " + url);
+                result = barrels.get(i).getAssociatedURLs(url);
+                break;
+            }
+        }
+
+        if (result == null) {
+            return List.of("No associated URLs found");
+        }
+
+        return List.of(result.toArray(new String[0]));
+    }
+
     /**
      * Method to show the associated URLs of a given URL
      * @param name Client's name

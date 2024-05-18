@@ -51,6 +51,17 @@ public class MessagingController {
     @Autowired
     private ThymeleafViewResolver thymeleafViewResolver;
 
+    @PostMapping("/showAssociatedURLs")
+    public ResponseEntity<List<String>> showConnections(@RequestParam String url) {
+        List<String> associatedUrls = null; // Substitua 'service' pelo nome do seu serviço
+        try {
+            associatedUrls = h.showAssociatedURLsResults(name, url);
+        } catch (RemoteException e) {
+            throw new RuntimeException(e);
+        }
+        return ResponseEntity.ok(associatedUrls);
+    }
+
     /**
      * Redirects to the index page
      * @return index page
