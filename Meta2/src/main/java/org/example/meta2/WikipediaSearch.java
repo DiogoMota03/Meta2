@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /**
@@ -35,7 +36,7 @@ public class WikipediaSearch {
                 URLData urlData = new URLData(summary.getJSONObject("content_urls").getJSONObject("desktop").getString("page"), "Top Wikipedia Article: " + title, new String[]{summary.optString("extract", "No summary available")});
                 System.out.println("URL: " + urlData.getUrl());
                 System.out.println("Title: " + urlData.getTitle());
-                System.out.println("Content: " + urlData.getContent()[0]);
+                System.out.println("Content: " + Arrays.toString(urlData.getContent()));
 
                 return urlData;
             } else {
