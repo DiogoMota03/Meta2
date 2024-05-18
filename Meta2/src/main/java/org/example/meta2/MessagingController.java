@@ -13,7 +13,9 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,6 +25,7 @@ import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
 import javax.swing.*;
+import javax.xml.transform.Source;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -58,7 +61,11 @@ public class MessagingController {
         try {
             associatedUrls = h.showAssociatedURLsResults(name, url);
         } catch (RemoteException e) {
-            throw new RuntimeException(e);
+            System.out.println("Error showing associated urls: " + e.getMessage());
+        } catch (NullPointerException e) {
+            System.out.println("Error: Gateway isn't connected -> " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error in show associated urls: " + e.getMessage());
         }
         return ResponseEntity.ok(associatedUrls);
     }
@@ -209,9 +216,28 @@ public class MessagingController {
      * @return status page
      */
     @PostMapping("/status")
-    public String statusPage() {
-        System.out.println("Received text: ");
+    public String status(Model model) {
+        // Call the getStatus() method
+        getStatus();
+
+        // Return the name of the view
         return "status";
+    }
+
+    /**
+     * Method to get the status of the gateway
+     */
+    private void getStatus() {
+        // Your implementation here
+        try {
+            h.getStatus(name);
+        } catch (RemoteException e) {
+            System.out.println("Error getting status " + e.getMessage());
+        } catch (NullPointerException e) {
+            System.out.println("Error: Gateway isn't connected -> " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Error in status: " + e.getMessage());
+        }
     }
 
 
