@@ -8,6 +8,7 @@
     <script src="/webjars/sockjs-client/sockjs.min.js"></script>
     <script src="/webjars/stomp-websocket/stomp.min.js"></script>
     <script src="/app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 </head>
 <body>
 <ul id="screen">
@@ -55,8 +56,18 @@
                 url: url
             },
             success: function(response) {
-                var associatedUrls = response.join("\n");
-                alert(associatedUrls);
+                var associatedUrls = response;
+                var clickableUrls = "";
+
+                for (var i = 0; i < associatedUrls.length; i++) {
+                    clickableUrls += '<a href="' + associatedUrls[i] + '" target="_blank">' + associatedUrls[i] + '</a><br>';
+                }
+
+                Swal.fire({
+                    title: 'Associated URLs',
+                    html: clickableUrls,
+                    confirmButtonText: 'Close'
+                });
             },
             error: function(error) {
                 console.log(error);
