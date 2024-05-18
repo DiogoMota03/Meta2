@@ -89,15 +89,15 @@ function addNewRow(tableID, id, time, repartition) {
     // Get the table by its id
     var table = document.getElementById(tableID);
 
-// Insert a row at the end of the table
+    // Insert a row at the end of the table
     var newRow = table.insertRow(-1);
 
-// Insert a cell in the row at index 0
+    // Insert a cell in the row at index 0
     var newCell1 = newRow.insertCell(0);
     var newCell2 = newRow.insertCell(1);
     var newCell3 = newRow.insertCell(2);
 
-// Append a text node to the cell
+    // Append a text node to the cell
     var newText1 = document.createTextNode(id);
     var newText2 = document.createTextNode(time);
     var newText3 = document.createTextNode(repartition);
@@ -105,6 +105,11 @@ function addNewRow(tableID, id, time, repartition) {
     newCell1.appendChild(newText1);
     newCell2.appendChild(newText2);
     newCell3.appendChild(newText3);
+
+    // Change the cell to a header cell
+    newCell1.outerHTML = "<th>" + newCell1.innerHTML + "</th>";
+    newCell2.outerHTML = "<th>" + newCell2.innerHTML + "</th>";
+    newCell3.outerHTML = "<th>" + newCell3.innerHTML + "</th>";
 }
 
 /*

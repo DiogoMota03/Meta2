@@ -26,6 +26,11 @@ body {
     height: auto; /* Maintain aspect ratio */
 }
 
+#server-message {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
 .search-button {
     background-color: #f8f9fa;
     border: 1px solid #dfe1e5;
