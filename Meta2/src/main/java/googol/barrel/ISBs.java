@@ -356,7 +356,7 @@ public class ISBs extends UnicastRemoteObject implements IISBs {
 
                 saveURLData(urlData);
 
-                System.out.println(urlData.getUrl() + " " + urlData.getTitle());
+                System.out.println(urlData.getUrl() + " " + urlData.getTitle() + "\n" + Arrays.toString(urlData.getContent()) + "\n");
 
                 String successMes = "SUCCESS: Barrel received URL";
                 byte[] successbuf = successMes.getBytes();

@@ -31,7 +31,7 @@ public interface IGateway extends Remote {
 
     int searchWords(String name, String s, int index, boolean flag) throws RemoteException;
 
-    List<URLData> getResult() throws RemoteException;
+    List<URLData> getResult(String query) throws RemoteException;
 
     void showMenuAssociated(String name) throws RemoteException;
 

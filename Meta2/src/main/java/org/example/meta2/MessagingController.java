@@ -25,6 +25,7 @@ import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import javax.swing.*;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -154,13 +155,23 @@ public class MessagingController {
         try {
             int r = h.searchWords(name, text, 0, true);
             if (r == -1) {
-                List<URLData> results = Collections.emptyList();
+
+                List<URLData> results = new ArrayList<>();
+
+                // Add the wikipedia top result
+                WikipediaSearch ws = new WikipediaSearch();
+                URLData wikiResult = ws.topWikiSearch(text);
+                if (wikiResult != null)
+                    results.add(wikiResult);
+                else
+                    results = Collections.emptyList();
+
                 Context context = new Context();
                 context.setVariable("results", results);
                 String htmlContent = thymeleafViewResolver.getTemplateEngine().process("search", context);
                 return ResponseEntity.ok(htmlContent);
             } else{
-                List<URLData> results = h.getResult();
+                List<URLData> results = h.getResult(text);
                 Context context = new Context();
                 context.setVariable("results", results.subList(page * 10, Math.min((page + 1) * 10, results.size())));
                 String htmlContent = thymeleafViewResolver.getTemplateEngine().process("search", context);
@@ -202,4 +213,6 @@ public class MessagingController {
         System.out.println("Received text: ");
         return "status";
     }
+
+
 }

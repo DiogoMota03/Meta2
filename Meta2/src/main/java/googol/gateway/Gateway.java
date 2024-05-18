@@ -399,7 +399,7 @@ public class Gateway extends UnicastRemoteObject implements IGateway {
     }
 
     /**
-     * Method to search for a word
+     * Method to search for a word in the barrels, HackerNews top stories and the top Wikipedia search
      * @param name Client's name
      * @param s Word to be searched
      * @param index Page's index
@@ -409,20 +409,13 @@ public class Gateway extends UnicastRemoteObject implements IGateway {
      * */
     @Override
     public int searchWords(String name, String s, int index, boolean flag) throws RemoteException {
+        s = s.toLowerCase();
         System.out.println("Searching for: " + s);
 
         // call heackernews search
         HackerNewsController hackerNewsController = new HackerNewsController();
         List<HackerNewsItemRecord> hackerNewsResults = hackerNewsController.hackerNewsTopStories(s);
 
-        /* Appearance: TODO formatar, realizar esta pesquisa sem urls nos barrels ou sem resultados oara a pesquisa nos barrels
-
-    > https://github.com/quarylabs/quary
-    > Show HN: Open-source BI and analytics for engineers
-    > We are building Quary (), an engineer-first BI/analytics product. You can fi-
-    nd our repo at and our website at . There’s a demo video here: As engineers
-     who have worked on data at startups and Amazon, we were frustrated by sel...
- */
         clients.get(name).print_on_client("\n########### Hacker news results #########\n");
 
         ArrayList<String> hackerNewsUrls = new ArrayList<>();
@@ -460,7 +453,7 @@ public class Gateway extends UnicastRemoteObject implements IGateway {
 
         clients.get(name).print_on_client("#######################################");
 
-        hackerNewsUrls.forEach(url -> { // TODO copilot -> didnt check
+        hackerNewsUrls.forEach(url -> {
             try {
                 addURLs(hackerNewsUrls);
             } catch (Exception e) {
@@ -470,7 +463,7 @@ public class Gateway extends UnicastRemoteObject implements IGateway {
 
         List<URLData> hackerNewsResultsURLData = new ArrayList<>();
         for (HackerNewsItemRecord hackerNewsResult : hackerNewsResults) {
-            URLData l = new URLData(hackerNewsResult.url(), hackerNewsResult.title(), new String[]{hackerNewsResult.text()});
+            URLData l = new URLData(hackerNewsResult.url(), "Hacker News Result: " + hackerNewsResult.title(), new String[]{hackerNewsResult.text()});
             hackerNewsResultsURLData.add(l);
 
         }
@@ -513,7 +506,7 @@ public class Gateway extends UnicastRemoteObject implements IGateway {
         }
 
         //If both arrays are empty, there is no word to search + hackerNews has no results
-        if(evens.isEmpty() && odds.isEmpty() && hackerNewsUrls.isEmpty()){ // TODO check
+        if(evens.isEmpty() && odds.isEmpty() && hackerNewsUrls.isEmpty()){
             clients.get(name).print_on_client("No words to search");
             getStatus("");
             return -1;
@@ -596,7 +589,7 @@ public class Gateway extends UnicastRemoteObject implements IGateway {
             return -1;
         }
 
-        if ((resultEven == null || resultOdd == null) && hackerNewsResults.isEmpty()) { // TODO check
+        if ((resultEven == null || resultOdd == null) && hackerNewsResults.isEmpty()) {
             clients.get(name).print_on_client("No results found!");
             getStatus("");
             return -1;
@@ -650,8 +643,19 @@ public class Gateway extends UnicastRemoteObject implements IGateway {
     }
 
     @Override
-    public List<URLData> getResult() throws RemoteException {
-        return result;
+    public List<URLData> getResult(String query) throws RemoteException {
+        List<URLData> finalResult = new ArrayList<>();
+
+        // Add the wikipedia top result
+        WikipediaSearch ws = new WikipediaSearch();
+        URLData wikiResult = ws.topWikiSearch(query);
+        if (wikiResult != null)
+            finalResult.add(wikiResult);
+
+        // Add the hackernews and the barrel results
+        finalResult.addAll(result);
+
+        return finalResult;
     }
 
     /**
